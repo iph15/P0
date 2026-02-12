@@ -1,0 +1,31 @@
+# Binarios compilados de Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Archivos de test
+*.test
+*.out
+
+# Archivos temporales
+*.tmp
+*.swp
+*~
+
+# Archivos de salida del programa (opcional, puedes comentar si quieres incluirlos)
+salida.txt
+salidaa.txt
+
+# Dependencias de Go
+vendor/
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
