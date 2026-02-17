@@ -22,7 +22,7 @@ salidaa.txt
 vendor/
 
 # IDEs
-.vscode/
+# .vscode/  # Comentado para mantener configuración del debugger
 .idea/
 *.iml
 
