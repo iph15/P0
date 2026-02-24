@@ -1,4 +1,4 @@
-# 📚 Guía de Colaboración - Proyecto Cifrado César
+# 📚 Guía de Colaboración
 
 ## 🚀 PARTE 1: Subir el Proyecto a GitHub (TÚ)
 

@@ -14,6 +14,12 @@ NOS HEMOS TOMADO LAS LIBERTADES DE DISEÑO DE ...
 	- SI EL TEXTO ES MAS CORTO QUE LA MATRIZ, SE RELLENA CON 'X'
 	- SI EL TEXTO ES MAS LARGO QUE LA MATRIZ, SE TRUNCA
 	- PARA LA ENTRADA POR TECLADO, SE USA '_' COMO CARACTER DE ESCAPE
+
+Packages empleados:
+- fmt -> Mensajes por consola :D
+- os -> Punteros a in/out
+- strconv -> ParseInt -> strconv.Atoi()
+- unicode -> Pasar las runas a mayúscula
 */
 
 package main
@@ -45,6 +51,7 @@ func main() {
 
 	switch len(os.Args) {
 	case 3:
+		// go run escitala.go filas columnas
 		fmt.Println("Escribe el texto a cifrar terminado en '_', como caracter de escape!")
 		// Leo de teclado y escribo en pantalla
 		fin = os.Stdin
@@ -63,7 +70,7 @@ func main() {
 		}
 
 	case 4:
-		// Caso 2: go run escitala.go entrada.txt filas columnas
+		//go run escitala.go entrada.txt filas columnas
 		// Lee de archivo, escribe a stdout
 		fout = os.Stdout
 		// Abrimos el fichero de entrada
@@ -120,6 +127,9 @@ func main() {
 
 	default:
 		fmt.Println("Numero incorrecto de parámetros :(")
+		fmt.Println("[3] go run escitala.go filas columnas")
+		fmt.Println("[4] go run escitala.go entrada.txt filas columnas")
+		fmt.Println("[5] go run escitala.go entrada.txt salida.txt filas columnas")
 		os.Exit(1)
 	}
 
@@ -129,19 +139,19 @@ func main() {
 
 	for {
 		var c rune
-		_, err = fmt.Fscanf(fin, "%c", &c) // lectura carácter por carácter
+		_, err = fmt.Fscanf(fin, "%c", &c) // lectura carácter por carácter de la entrada
 
 		if err != nil { // fin de fichero o error
 			break
 		}
-
+		// Compruebo escape antes de pasar a mayuscula o chequear alfabeto
 		if c == '_' {
 			break
 		}
 
-		C := unicode.ToUpper(c) // convertimos a mayúsculas
+		C := unicode.ToUpper(c) // convierto a mayúsculas
 
-		// Solo añadimos si está en el alfabeto (ignoramos espacios y otros caracteres)
+		// Solo añado si está en el alfabeto (ignoro espacios y otros caracteres)
 		if alfabeto[C] {
 			cleanTxt = append(cleanTxt, C)
 		}
@@ -150,20 +160,20 @@ func main() {
 	// Slots totales de la matriz
 	totalCeldas := filas * columnas
 
-	// Si el texto es mas pequeño que la matriz, relleno cadena con X
+	// Si el texto es mas pequeño que la matriz, relleno cadena con X's
 	// antes de meterla a la matriz
 
 	for i := len(cleanTxt); i < totalCeldas; i++ {
 		cleanTxt = append(cleanTxt, 'X')
 	}
 
-	// Si el texto es mas largo lo cortamos
+	// Si el texto es mas largo lo corto
 	if len(cleanTxt) > totalCeldas {
 		fmt.Println("Desbordamiento! El texto se corta")
 		cleanTxt = cleanTxt[:totalCeldas]
 	}
 
-	// Creamos la matriz bidimensional
+	// Creo matriz, slice de slices de runas
 	matriz := make([][]rune, filas)
 	for i := range matriz {
 		matriz[i] = make([]rune, columnas)
@@ -193,7 +203,7 @@ func main() {
 		}
 	}
 
-	// Si escribo en pantalla meto un salto de linea
+	// Si escribo en pantalla meto un salto de linea (estéticamente queda mejor)
 	if fout == os.Stdout {
 		fmt.Fprintln(fout)
 	}
